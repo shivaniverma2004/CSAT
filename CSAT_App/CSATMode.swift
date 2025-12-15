@@ -92,11 +92,15 @@ private extension CSATBottomSheet {
                     .font(rating >= star ? .system(size: 36) : .system(size: 30))
                     .foregroundColor(rating >= star ? .red : .gray.opacity(0.3))
                     .onTapGesture {
-                        withAnimation {
-                            rating = star
-                            mode = star >= 3 ? .thankYou : .feedback
+                        rating = star
+
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            withAnimation(.spring(response: 0.45, dampingFraction: 0.85)) {
+                                mode = star >= 3 ? .thankYou : .feedback
+                            }
                         }
                     }
+
             }
         }
         .padding(.top, 4)
